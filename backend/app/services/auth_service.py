@@ -73,7 +73,8 @@ def register_user(db: Session, email: str, password: str,
     logger.info("User registered", user_id=str(user.id), email=email)
 
     access_token = create_access_token({"sub": str(user.id)})
-    refresh_token_str = create_refresh_token({"sub": str(user.id)})
+    import time; time.sleep(0.01)
+    refresh_token_str = create_refresh_token({"sub": str(user.id), "jti": str(__import__("uuid").uuid4())})
 
     _store_refresh_token(db, user.id, refresh_token_str)
 
@@ -104,7 +105,8 @@ def login_user(db: Session, email: str, password: str) -> tuple[User, str, str]:
     logger.info("User logged in", user_id=str(user.id))
 
     access_token = create_access_token({"sub": str(user.id)})
-    refresh_token_str = create_refresh_token({"sub": str(user.id)})
+    import time; time.sleep(0.01)
+    refresh_token_str = create_refresh_token({"sub": str(user.id), "jti": str(__import__("uuid").uuid4())})
     _store_refresh_token(db, user.id, refresh_token_str)
 
     return user, access_token, refresh_token_str

@@ -43,7 +43,8 @@ export default function Dashboard() {
           <span style={s.userName}>
             {user?.display_name || user?.first_name || user?.email}
           </span>
-          <button style={s.logoutBtn} onClick={handleLogout}>Sign Out</button>
+          <button style={s.chatBtn} onClick={() => navigate('/chat')}>💬 Open Chat</button>
+<button style={s.logoutBtn} onClick={handleLogout}>Sign Out</button>
         </div>
       </div>
 
@@ -126,4 +127,5 @@ const s = {
   wsName: { fontWeight:'600', marginBottom:'0.2rem' },
   wsSlug: { color:'#666', fontSize:'0.85rem' },
   badge: { fontSize:'0.75rem', background:'#2a2a2a', padding:'0.25rem 0.75rem', borderRadius:'20px', color:'#888' },
+  chatBtn: { padding:'0.4rem 1rem', background:'linear-gradient(to right,#3b82f6,#8b5cf6)', border:'none', borderRadius:'6px', color:'#fff', cursor:'pointer' },
 }

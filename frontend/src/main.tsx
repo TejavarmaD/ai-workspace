@@ -6,6 +6,7 @@ import ProtectedRoute from './router/ProtectedRoute'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Chat from './pages/Chat'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -20,7 +21,12 @@ createRoot(document.getElementById('root')).render(
               <Dashboard />
             </ProtectedRoute>
           } />
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/chat" element={
+            <ProtectedRoute>
+              <Chat />
+            </ProtectedRoute>
+          } />
+          <Route path="/" element={<Navigate to="/chat" replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
