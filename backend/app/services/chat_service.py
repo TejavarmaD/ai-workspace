@@ -27,7 +27,7 @@ def create_conversation(db: Session, user_id: uuid.UUID, workspace_id: uuid.UUID
         workspace_id=workspace_id,
         user_id=user_id,
         title=title,
-        model_id="claude-sonnet-4-5",
+        model_id="gemini-flash-latest",
     )
     db.add(conv)
     db.commit()
@@ -68,10 +68,41 @@ def delete_conversation(db: Session, conversation_id: uuid.UUID, user_id: uuid.U
     logger.info("Conversation deleted", conversation_id=str(conversation_id))
 
 
+def call_gemini(messages_for_api: list, content: str) -> str:
+    try:
+        from google import genai
+        api_key = os.environ.get("GOOGLE_API_KEY", "")
+        if not api_key:
+            return "Google API key not configured."
+
+        client = genai.Client(api_key=api_key)
+
+        # Build contents from history
+        contents = []
+        for msg in messages_for_api:
+            role = "user" if msg["role"] == "user" else "model"
+            contents.append({"role": role, "parts": [{"text": msg["content"]}]})
+
+        response = client.models.generate_content(
+            model="gemini-flash-latest",
+            contents=contents,
+        )
+        return response.text
+
+    except Exception as e:
+        logger.error("Gemini API error", error=str(e))
+        error_str = str(e)
+        if "API_KEY_INVALID" in error_str:
+            return "Invalid Google API key."
+        elif "quota" in error_str.lower():
+            return "API quota exceeded. Please try again later."
+        else:
+            return f"AI error: {error_str[:150]}"
+
+
 def send_message(db: Session, conversation_id: uuid.UUID, user_id: uuid.UUID, content: str) -> dict:
     conv = get_conversation(db, conversation_id, user_id)
 
-    # Store user message
     user_msg = Message(
         conversation_id=conv.id,
         role="user",
@@ -80,12 +111,10 @@ def send_message(db: Session, conversation_id: uuid.UUID, user_id: uuid.UUID, co
     db.add(user_msg)
     db.commit()
 
-    # Auto-title from first message
     if conv.title == "New Conversation":
         conv.title = content[:50] + ("..." if len(content) > 50 else "")
         db.commit()
 
-    # Get conversation history for context
     history = db.query(Message).filter(
         Message.conversation_id == conv.id
     ).order_by(Message.created_at).all()
@@ -95,30 +124,14 @@ def send_message(db: Session, conversation_id: uuid.UUID, user_id: uuid.UUID, co
         for m in history
     ]
 
-    # Call Anthropic
-    try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
-        response = client.messages.create(
-            model="claude-sonnet-4-5",
-            max_tokens=2048,
-            messages=messages_for_api,
-        )
-        assistant_content = response.content[0].text
-    except Exception as e:
-        logger.error("Anthropic API error", error=str(e))
-        # Store error message so conversation isn't broken
-        assistant_content = "I'm sorry, I encountered an error. Please try again."
+    assistant_content = call_gemini(messages_for_api, content)
 
-    # Store assistant message
     assistant_msg = Message(
         conversation_id=conv.id,
         role="assistant",
         content=assistant_content,
     )
     db.add(assistant_msg)
-
-    # Update conversation timestamp
     conv.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(assistant_msg)
