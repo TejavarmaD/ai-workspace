@@ -12,8 +12,9 @@ export default function Chat() {
   const [messages, setMessages] = useState([])
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
+  const [selectedProvider, setSelectedProvider] = useState('gemini')
+  const [selectedModel, setSelectedModel] = useState('gemini-flash-latest')
 
-  // Load workspace on mount
   useEffect(() => {
     api.workspaces.list().then(data => {
       if (data.workspaces?.length > 0) {
@@ -22,7 +23,6 @@ export default function Chat() {
     })
   }, [])
 
-  // Load conversations when workspace is set
   useEffect(() => {
     if (!workspaceId) return
     loadConversations()
@@ -39,7 +39,12 @@ export default function Chat() {
 
   const handleNewChat = async () => {
     try {
-      const conv = await api.chat.createConversation(workspaceId)
+      const conv = await api.post('/api/v1/chat/conversations', {
+        workspace_id: workspaceId,
+        title: 'New Conversation',
+        provider: selectedProvider,
+        model: selectedModel,
+      })
       setConversations(prev => [conv, ...prev])
       setActiveConversation(conv)
       setMessages([])
@@ -54,6 +59,8 @@ export default function Chat() {
     try {
       const data = await api.chat.getConversation(conv.id)
       setMessages(data.messages || [])
+      if (conv.provider) setSelectedProvider(conv.provider)
+      if (conv.model) setSelectedModel(conv.model)
     } catch (err) {
       console.error('Failed to load messages:', err)
     } finally {
@@ -74,10 +81,11 @@ export default function Chat() {
     setMessages(prev => [...prev, userMsg])
 
     try {
-      const response = await api.chat.sendMessage(activeConversation.id, content)
+      const response = await api.post(
+        `/api/v1/chat/conversations/${activeConversation.id}/messages`,
+        { content, conversation_id: activeConversation.id, provider: selectedProvider, model: selectedModel }
+      )
       setMessages(prev => [...prev, response])
-
-      // Refresh conversation list to update titles
       loadConversations()
     } catch (err) {
       setMessages(prev => [...prev, {
@@ -89,6 +97,11 @@ export default function Chat() {
     } finally {
       setSending(false)
     }
+  }
+
+  const handleSelectModel = (provider, model) => {
+    setSelectedProvider(provider)
+    setSelectedModel(model)
   }
 
   const handleRename = async (convId, title) => {
@@ -126,6 +139,9 @@ export default function Chat() {
         sending={sending}
         onSendMessage={handleSendMessage}
         onNewChat={handleNewChat}
+        selectedProvider={selectedProvider}
+        selectedModel={selectedModel}
+        onSelectModel={handleSelectModel}
       />
     </div>
   )

@@ -1,11 +1,12 @@
 from pydantic import BaseModel
-from datetime import datetime
 from typing import Optional
 
 
 class CreateConversationRequest(BaseModel):
     title: str = "New Conversation"
     workspace_id: str
+    provider: str = "gemini"
+    model: str = "gemini-flash-latest"
 
 
 class RenameConversationRequest(BaseModel):
@@ -15,6 +16,8 @@ class RenameConversationRequest(BaseModel):
 class SendMessageRequest(BaseModel):
     content: str
     conversation_id: str
+    provider: Optional[str] = None
+    model: Optional[str] = None
 
 
 class MessageResponse(BaseModel):

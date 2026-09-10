@@ -6,8 +6,29 @@ from backend.app.core.dependencies import get_current_user
 from backend.app.db.models.user import User
 from backend.app.schemas.chat import CreateConversationRequest, RenameConversationRequest, SendMessageRequest
 from backend.app.services import chat_service
+from backend.app.gateway.gateway import get_provider_status
+from backend.app.gateway.contracts import PROVIDER_REGISTRY
 
 router = APIRouter(prefix="/chat", tags=["chat"])
+
+
+@router.get("/providers")
+def list_providers():
+    """Return all providers with their status and available models."""
+    return {"providers": get_provider_status()}
+
+
+@router.get("/providers/{provider_id}/models")
+def list_provider_models(provider_id: str):
+    """Return models for a specific provider."""
+    if provider_id not in PROVIDER_REGISTRY:
+        raise HTTPException(status_code=404, detail=f"Provider '{provider_id}' not found")
+    provider = PROVIDER_REGISTRY[provider_id]
+    return {
+        "provider": provider_id,
+        "display_name": provider["display_name"],
+        "models": provider["models"],
+    }
 
 
 @router.post("/conversations", status_code=201)
@@ -16,11 +37,15 @@ def create_conversation(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    provider = getattr(data, 'provider', 'gemini') or 'gemini'
+    model = getattr(data, 'model', 'gemini-flash-latest') or 'gemini-flash-latest'
     conv = chat_service.create_conversation(
         db=db,
         user_id=current_user.id,
         workspace_id=uuid.UUID(data.workspace_id),
         title=data.title,
+        provider=provider,
+        model=model,
     )
     return chat_service.format_conversation(conv)
 
@@ -45,7 +70,9 @@ def get_conversation(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    conv = chat_service.get_conversation(db=db, conversation_id=conversation_id, user_id=current_user.id)
+    conv = chat_service.get_conversation(
+        db=db, conversation_id=conversation_id, user_id=current_user.id
+    )
     messages = [chat_service.format_message(m) for m in (conv.messages or [])]
     result = chat_service.format_conversation(conv)
     result["messages"] = messages
@@ -72,7 +99,9 @@ def delete_conversation(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    chat_service.delete_conversation(db=db, conversation_id=conversation_id, user_id=current_user.id)
+    chat_service.delete_conversation(
+        db=db, conversation_id=conversation_id, user_id=current_user.id
+    )
 
 
 @router.post("/conversations/{conversation_id}/messages")
@@ -82,9 +111,13 @@ def send_message(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
+    provider = getattr(data, 'provider', None)
+    model = getattr(data, 'model', None)
     return chat_service.send_message(
         db=db,
         conversation_id=conversation_id,
         user_id=current_user.id,
         content=data.content,
+        provider=provider,
+        model=model,
     )
