@@ -16,8 +16,9 @@ export default function ChatWindow({
   if (!conversation) return (
     <div style={s.empty}>
       <div style={s.emptyInner}>
+        <div style={s.emptyIcon}>✦</div>
         <h1 style={s.emptyTitle}>AI Workspace</h1>
-        <p style={s.emptyText}>Choose a model and start chatting</p>
+        <p style={s.emptyText}>Select a model and start a new conversation</p>
         <div style={{ marginBottom: '1.5rem' }}>
           <ModelSelector
             selectedProvider={selectedProvider}
@@ -25,7 +26,7 @@ export default function ChatWindow({
             onSelect={onSelectModel}
           />
         </div>
-        <button style={s.startBtn} onClick={onNewChat}>+ Start New Chat</button>
+        <button style={s.startBtn} onClick={onNewChat}>+ New Chat</button>
       </div>
     </div>
   )
@@ -34,7 +35,9 @@ export default function ChatWindow({
     <div style={s.window}>
       {/* Header */}
       <div style={s.header}>
-        <h2 style={s.title}>{conversation.title}</h2>
+        <div style={s.headerLeft}>
+          <h2 style={s.title}>{conversation.title}</h2>
+        </div>
         <ModelSelector
           selectedProvider={selectedProvider}
           selectedModel={selectedModel}
@@ -44,11 +47,25 @@ export default function ChatWindow({
 
       {/* Messages */}
       <div style={s.messages}>
-        {loading && <div style={s.loading}>Loading messages...</div>}
+        {loading && (
+          <div style={s.loadingWrap}>
+            <div style={s.loadingDot} />
+            <span style={s.loadingText}>Loading messages...</span>
+          </div>
+        )}
+
         {messages.map((msg, i) => (
-          <div key={msg.id || i} style={{ ...s.msgRow, justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
-            {msg.role === 'assistant' && <div style={s.aiAvatar}>AI</div>}
-            <div style={{ ...s.bubble, ...(msg.role === 'user' ? s.userBubble : s.aiBubble) }}>
+          <div key={msg.id || i} style={{
+            ...s.msgRow,
+            justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start'
+          }}>
+            {msg.role === 'assistant' && (
+              <div style={s.aiAvatar}>✦</div>
+            )}
+            <div style={{
+              ...s.bubble,
+              ...(msg.role === 'user' ? s.userBubble : s.aiBubble)
+            }}>
               <p style={s.msgContent}>{msg.content}</p>
               <div style={s.msgMeta}>
                 <span>{new Date(msg.created_at).toLocaleTimeString()}</span>
@@ -60,14 +77,23 @@ export default function ChatWindow({
                 )}
               </div>
             </div>
-            {msg.role === 'user' && <div style={s.userAvatar}>You</div>}
+            {msg.role === 'user' && (
+              <div style={s.userAvatar}>
+                {msg.role === 'user' ? 'You' : 'AI'}
+              </div>
+            )}
           </div>
         ))}
+
         {sending && (
           <div style={{ ...s.msgRow, justifyContent: 'flex-start' }}>
-            <div style={s.aiAvatar}>AI</div>
+            <div style={s.aiAvatar}>✦</div>
             <div style={{ ...s.bubble, ...s.aiBubble }}>
-              <p style={s.typing}>Thinking...</p>
+              <div style={s.typingDots}>
+                <span style={s.dot1} />
+                <span style={s.dot2} />
+                <span style={s.dot3} />
+              </div>
             </div>
           </div>
         )}
@@ -80,24 +106,31 @@ export default function ChatWindow({
 }
 
 const s = {
-  empty: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0f0f0f' },
-  emptyInner: { textAlign: 'center', maxWidth: '400px' },
-  emptyTitle: { fontSize: '2rem', fontWeight: 'bold', background: 'linear-gradient(to right,#60a5fa,#a78bfa)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '1rem' },
-  emptyText: { color: '#888', marginBottom: '1.5rem' },
-  startBtn: { padding: '0.75rem 2rem', background: 'linear-gradient(to right,#3b82f6,#8b5cf6)', border: 'none', borderRadius: '8px', color: '#fff', cursor: 'pointer', fontWeight: '600', fontSize: '1rem' },
-  window: { flex: 1, display: 'flex', flexDirection: 'column', height: '100vh', background: '#0f0f0f' },
-  header: { padding: '0.75rem 1.5rem', borderBottom: '1px solid #222', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#111' },
-  title: { fontSize: '1rem', fontWeight: '600', color: '#fff', margin: 0, flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginRight: '1rem' },
-  messages: { flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' },
-  loading: { color: '#666', textAlign: 'center', padding: '1rem' },
-  msgRow: { display: 'flex', alignItems: 'flex-end', gap: '0.5rem' },
-  bubble: { maxWidth: '70%', padding: '0.75rem 1rem', borderRadius: '12px' },
-  userBubble: { background: 'linear-gradient(to right,#3b82f6,#8b5cf6)', color: '#fff', borderBottomRightRadius: '4px' },
-  aiBubble: { background: '#1a1a1a', border: '1px solid #333', color: '#e5e5e5', borderBottomLeftRadius: '4px' },
-  msgContent: { margin: 0, lineHeight: '1.6', whiteSpace: 'pre-wrap', wordBreak: 'break-word' },
-  msgMeta: { display: 'flex', gap: '0.5rem', marginTop: '0.25rem', fontSize: '0.7rem', opacity: 0.6, flexWrap: 'wrap' },
-  providerTag: { color: '#60a5fa' },
-  aiAvatar: { width: '28px', height: '28px', borderRadius: '50%', background: '#1e1e2e', border: '1px solid #333', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', color: '#60a5fa', flexShrink: 0 },
-  userAvatar: { width: '28px', height: '28px', borderRadius: '50%', background: 'linear-gradient(to right,#3b82f6,#8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', color: '#fff', flexShrink: 0 },
-  typing: { margin: 0, color: '#888', fontStyle: 'italic' },
+  empty: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f8fafc' },
+  emptyInner: { textAlign: 'center', maxWidth: '420px', padding: '2rem' },
+  emptyIcon: { fontSize: '2.5rem', color: '#6366f1', marginBottom: '1rem' },
+  emptyTitle: { fontSize: '1.8rem', fontWeight: '700', color: '#1e293b', marginBottom: '0.5rem' },
+  emptyText: { color: '#94a3b8', marginBottom: '2rem', fontSize: '0.95rem' },
+  startBtn: { padding: '0.75rem 2rem', background: 'linear-gradient(to right, #6366f1, #8b5cf6)', border: 'none', borderRadius: '10px', color: '#fff', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' },
+  window: { flex: 1, display: 'flex', flexDirection: 'column', height: '100vh', background: '#f8fafc' },
+  header: { padding: '0.9rem 1.5rem', borderBottom: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#ffffff', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' },
+  headerLeft: { flex: 1, overflow: 'hidden', marginRight: '1rem' },
+  title: { fontSize: '0.95rem', fontWeight: '600', color: '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+  messages: { flex: 1, overflowY: 'auto', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' },
+  loadingWrap: { display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#94a3b8', padding: '0.5rem' },
+  loadingDot: { width: '8px', height: '8px', borderRadius: '50%', background: '#6366f1', animation: 'pulse 1s infinite' },
+  loadingText: { fontSize: '0.875rem' },
+  msgRow: { display: 'flex', alignItems: 'flex-end', gap: '0.6rem' },
+  bubble: { maxWidth: '68%', padding: '0.85rem 1.1rem', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' },
+  userBubble: { background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', borderBottomRightRadius: '4px' },
+  aiBubble: { background: '#ffffff', border: '1px solid #e8eaf6', color: '#1e293b', borderBottomLeftRadius: '4px' },
+  msgContent: { margin: 0, lineHeight: '1.65', whiteSpace: 'pre-wrap', wordBreak: 'break-word', fontSize: '0.95rem' },
+  msgMeta: { display: 'flex', gap: '0.5rem', marginTop: '0.35rem', fontSize: '0.7rem', opacity: 0.6, flexWrap: 'wrap' },
+  providerTag: { color: '#6366f1' },
+  aiAvatar: { width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #e0e7ff, #ede9fe)', border: '1px solid #c7d2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.85rem', color: '#6366f1', flexShrink: 0 },
+  userAvatar: { width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.65rem', color: '#fff', flexShrink: 0, fontWeight: '600' },
+  typingDots: { display: 'flex', gap: '4px', alignItems: 'center', padding: '0.2rem 0' },
+  dot1: { width: '7px', height: '7px', borderRadius: '50%', background: '#94a3b8' },
+  dot2: { width: '7px', height: '7px', borderRadius: '50%', background: '#94a3b8' },
+  dot3: { width: '7px', height: '7px', borderRadius: '50%', background: '#94a3b8' },
 }

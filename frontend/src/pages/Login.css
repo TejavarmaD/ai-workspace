@@ -1,0 +1,530 @@
+/* =========================================================
+   AXIOM LOGIN PAGE
+   ========================================================= */
+
+.login-page {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  overflow: hidden;
+
+  background: #01030d;
+}
+
+
+/* =========================================================
+   LOGIN CONTENT
+   ========================================================= */
+
+.login-content {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 32px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   LOGIN CARD
+   ========================================================= */
+
+.login-card {
+  position: relative;
+
+  width: 100%;
+  max-width: 460px;
+
+  padding: 48px;
+
+  box-sizing: border-box;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(17, 24, 52, 0.88),
+      rgba(5, 9, 27, 0.94)
+    );
+
+  border: 1px solid rgba(130, 150, 255, 0.22);
+
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 60px rgba(70, 80, 255, 0.08);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+
+/* =========================================================
+   SUBTLE CARD GLOW
+   ========================================================= */
+
+.login-card::before {
+  content: '';
+
+  position: absolute;
+
+  inset: -1px;
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(100, 120, 255, 0.18),
+      transparent 35%,
+      transparent 70%,
+      rgba(120, 80, 255, 0.12)
+    );
+
+  opacity: 0.8;
+
+  z-index: -1;
+}
+
+
+/* =========================================================
+   AXIOM BRAND
+   ========================================================= */
+
+.axiom-brand {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin-bottom: 34px;
+}
+
+
+.axiom-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(92, 100, 255, 0.8),
+      rgba(133, 82, 255, 0.75)
+    );
+
+  box-shadow:
+    0 0 24px rgba(92, 100, 255, 0.35);
+}
+
+
+.axiom-name {
+  color: #f5f7ff;
+
+  font-size: 22px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.28em;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.login-heading {
+  text-align: center;
+
+  margin-bottom: 34px;
+}
+
+
+.login-heading h1 {
+  margin: 0 0 10px;
+
+  color: #f7f8ff;
+
+  font-size: 34px;
+
+  line-height: 1.15;
+
+  font-weight: 700;
+
+  letter-spacing: -0.03em;
+}
+
+
+.login-heading p {
+  margin: 0;
+
+  color: rgba(191, 199, 225, 0.68);
+
+  font-size: 15px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.login-error {
+  margin-bottom: 20px;
+
+  padding: 12px 14px;
+
+  border-radius: 10px;
+
+  color: #ffb4b4;
+
+  background: rgba(180, 40, 60, 0.12);
+
+  border: 1px solid rgba(255, 90, 110, 0.22);
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   FORM FIELD
+   ========================================================= */
+
+.login-field {
+  margin-bottom: 22px;
+}
+
+
+.login-field label {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: rgba(235, 239, 255, 0.82);
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+
+.login-field input {
+  display: block;
+
+  width: 100%;
+
+  height: 54px;
+
+  box-sizing: border-box;
+
+  padding: 0 16px;
+
+  border-radius: 11px;
+
+  outline: none;
+
+  color: #f5f7ff;
+
+  background: rgba(8, 14, 35, 0.72);
+
+  border: 1px solid rgba(125, 145, 205, 0.28);
+
+  font-size: 15px;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+
+.login-field input::placeholder {
+  color: rgba(165, 177, 211, 0.45);
+}
+
+
+.login-field input:focus {
+  border-color: rgba(105, 115, 255, 0.75);
+
+  background: rgba(10, 16, 40, 0.9);
+
+  box-shadow:
+    0 0 0 3px rgba(92, 100, 255, 0.10),
+    0 0 25px rgba(75, 85, 255, 0.08);
+}
+
+
+/* =========================================================
+   SIGN IN BUTTON
+   ========================================================= */
+
+.login-button {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  height: 54px;
+
+  margin-top: 8px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      100deg,
+      #5968ed,
+      #7657e8
+    );
+
+  box-shadow:
+    0 12px 30px rgba(87, 87, 230, 0.25);
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+
+.login-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 16px 36px rgba(87, 87, 230, 0.34);
+}
+
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+
+.login-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.65;
+}
+
+
+.login-arrow {
+  position: absolute;
+
+  right: 20px;
+
+  font-size: 20px;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   REGISTER LINK
+   ========================================================= */
+
+.login-register {
+  margin: 28px 0 0;
+
+  text-align: center;
+
+  color: rgba(180, 189, 215, 0.65);
+
+  font-size: 14px;
+}
+
+
+.login-register a {
+  color: #9c8cff;
+
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: color 180ms ease;
+}
+
+
+.login-register a:hover {
+  color: #b8adff;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.login-footer {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-top: 34px;
+}
+
+
+.login-footer span {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(120, 140, 200, 0.20)
+    );
+}
+
+
+.login-footer span:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(120, 140, 200, 0.20),
+      transparent
+    );
+}
+
+
+.login-footer small {
+  color: rgba(130, 143, 183, 0.48);
+
+  font-size: 10px;
+
+  letter-spacing: 0.14em;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .login-content {
+    padding: 24px;
+  }
+
+  .login-card {
+    max-width: 440px;
+
+    padding: 40px 34px;
+
+    border-radius: 20px;
+  }
+
+  .login-heading h1 {
+    font-size: 30px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .login-content {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 32px 22px;
+
+    border-radius: 18px;
+  }
+
+  .axiom-brand {
+    margin-bottom: 28px;
+  }
+
+  .axiom-name {
+    font-size: 19px;
+  }
+
+  .login-heading {
+    margin-bottom: 28px;
+  }
+
+  .login-heading h1 {
+    font-size: 27px;
+  }
+
+  .login-heading p {
+    font-size: 14px;
+  }
+
+  .login-field {
+    margin-bottom: 18px;
+  }
+
+  .login-field input,
+  .login-button {
+    height: 52px;
+  }
+
+  .login-footer {
+    margin-top: 28px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .login-button,
+  .login-field input,
+  .login-register a {
+    transition: none;
+  }
+}

@@ -1,11 +1,18 @@
 import { useState } from 'react'
 import { useAuth } from '../lib/auth'
 import { useNavigate, Link } from 'react-router-dom'
+import ConstellationBackground from '../components/ConstellationBackground'
+import './Login.css'
 
 export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({ email: '', password: '' })
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  })
+
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -13,9 +20,10 @@ export default function Login() {
     e.preventDefault()
     setError('')
     setLoading(true)
+
     try {
       await login(form.email, form.password)
-      navigate('/app')
+      navigate('/chat')
     } catch (err) {
       setError(err.message)
     } finally {
@@ -24,59 +32,115 @@ export default function Login() {
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>AI Workspace</h1>
-        <p style={styles.subtitle}>Sign in to your account</p>
+    <div className="login-page">
+      {/* Animated constellation background */}
+      <ConstellationBackground />
 
-        {error && <div style={styles.error}>{error}</div>}
+      {/* Login content */}
+      <main className="login-content">
+        <div className="login-card">
 
-        <form onSubmit={handle}>
-          <div style={styles.field}>
-            <label style={styles.label}>Email</label>
-            <input
-              style={styles.input}
-              type="email"
-              value={form.email}
-              onChange={e => setForm({...form, email: e.target.value})}
-              placeholder="you@example.com"
-              required
-            />
+          {/* AXIOM branding */}
+          <div className="axiom-brand">
+            <div className="axiom-icon">✦</div>
+            <div className="axiom-name">AXIOM</div>
           </div>
-          <div style={styles.field}>
-            <label style={styles.label}>Password</label>
-            <input
-              style={styles.input}
-              type="password"
-              value={form.password}
-              onChange={e => setForm({...form, password: e.target.value})}
-              placeholder="••••••••"
-              required
-            />
-          </div>
-          <button style={styles.button} type="submit" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-        </form>
 
-        <p style={styles.link}>
-          Don't have an account? <Link to="/register" style={styles.a}>Register</Link>
-        </p>
-      </div>
+          {/* Heading */}
+          <div className="login-heading">
+            <h1>Welcome back</h1>
+            <p>Continue to your intelligent workspace.</p>
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="login-error">
+              {error}
+            </div>
+          )}
+
+          {/* Existing authentication form */}
+          <form onSubmit={handle}>
+
+            {/* Email */}
+            <div className="login-field">
+              <label htmlFor="email">
+                Email
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    email: e.target.value,
+                  })
+                }
+                placeholder="you@example.com"
+                autoComplete="email"
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div className="login-field">
+              <label htmlFor="password">
+                Password
+              </label>
+
+              <input
+                id="password"
+                type="password"
+                value={form.password}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    password: e.target.value,
+                  })
+                }
+                placeholder="••••••••"
+                autoComplete="current-password"
+                required
+              />
+            </div>
+
+            {/* Sign in */}
+            <button
+              className="login-button"
+              type="submit"
+              disabled={loading}
+            >
+              <span>
+                {loading ? 'Signing in...' : 'Sign In'}
+              </span>
+
+              {!loading && (
+                <span className="login-arrow">
+                  →
+                </span>
+              )}
+            </button>
+          </form>
+
+          {/* Register */}
+          <p className="login-register">
+            Don't have an account?{' '}
+            <Link to="/register">
+              Create account
+            </Link>
+          </p>
+
+          {/* Footer */}
+          <div className="login-footer">
+            <span></span>
+            <small>AXIOM INTELLIGENCE</small>
+            <span></span>
+          </div>
+
+        </div>
+      </main>
     </div>
   )
-}
-
-const styles = {
-  container: { minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', background:'#0f0f0f' },
-  card: { background:'#1a1a1a', border:'1px solid #333', borderRadius:'16px', padding:'2.5rem', width:'100%', maxWidth:'420px' },
-  title: { fontSize:'1.8rem', fontWeight:'bold', color:'#fff', textAlign:'center', marginBottom:'0.5rem' },
-  subtitle: { color:'#888', textAlign:'center', marginBottom:'2rem' },
-  error: { background:'#3f0000', border:'1px solid #dc2626', borderRadius:'8px', padding:'0.75rem', marginBottom:'1rem', color:'#f87171', fontSize:'0.9rem' },
-  field: { marginBottom:'1.25rem' },
-  label: { display:'block', color:'#ccc', fontSize:'0.9rem', marginBottom:'0.4rem' },
-  input: { width:'100%', padding:'0.75rem', background:'#111', border:'1px solid #444', borderRadius:'8px', color:'#fff', fontSize:'1rem', boxSizing:'border-box' },
-  button: { width:'100%', padding:'0.85rem', background:'linear-gradient(to right,#3b82f6,#8b5cf6)', border:'none', borderRadius:'8px', color:'#fff', fontSize:'1rem', fontWeight:'600', cursor:'pointer', marginTop:'0.5rem' },
-  link: { textAlign:'center', color:'#888', marginTop:'1.5rem', fontSize:'0.9rem' },
-  a: { color:'#60a5fa' },
 }
