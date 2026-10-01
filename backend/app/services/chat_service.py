@@ -91,9 +91,28 @@ def send_message(
     model: str = None,
 ) -> dict:
     conv = get_conversation(db, conversation_id, user_id)
+    
+    
+    # Parse provider/model — handle auto routing
+    if provider == "auto" or model == "auto":
+        from backend.app.gateway.router import auto_route
 
-    # Parse provider/model from conversation or use defaults
-    if provider is None or model is None:
+        decision, classification = auto_route(
+            content,
+            []
+        )
+
+        provider = decision.provider
+        model = decision.model
+
+        logger.info(
+            "Auto-routed",
+            provider=provider,
+            model=model,
+            task=classification.task_type.value,
+        )
+
+    elif provider is None or model is None:
         if ":" in (conv.model_id or ""):
             stored_provider, stored_model = conv.model_id.split(":", 1)
             provider = provider or stored_provider

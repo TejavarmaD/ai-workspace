@@ -121,3 +121,24 @@ def send_message(
         provider=provider,
         model=model,
     )
+
+
+@router.post("/auto-route")
+def auto_route_preview(data: dict, current_user: User = Depends(get_current_user)):
+    """Preview what model Auto mode would select for a given prompt."""
+    from backend.app.gateway.router import auto_route
+    prompt = data.get("prompt", "")
+    if not prompt:
+        raise HTTPException(status_code=400, detail="Prompt is required")
+    decision, classification = auto_route(prompt)
+    return {
+        "task_type": classification.task_type.value,
+        "confidence": round(classification.confidence, 2),
+        "reasoning": classification.reasoning,
+        "selected_provider": decision.provider,
+        "selected_model": decision.model,
+        "selection_reason": decision.reason,
+        "estimated_tokens": classification.estimated_tokens,
+        "requires_vision": classification.requires_vision,
+        "requires_tools": classification.requires_tools,
+    }
