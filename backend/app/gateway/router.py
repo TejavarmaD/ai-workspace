@@ -22,7 +22,7 @@ ROUTING_RULES = {
         "reason": "Claude excels at code generation and debugging",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
-            {"provider": "gemini", "model": "gemini-2.5-flash-lite"},
+            {"provider": "gemini", "model": "gemini-3.1-flash-lite"},
         ]
     },
     TaskType.REASONING: {
@@ -31,7 +31,7 @@ ROUTING_RULES = {
         "reason": "Claude has strong reasoning and analysis capabilities",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
-            {"provider": "gemini", "model": "gemini-2.5-flash-lite"},
+            {"provider": "gemini", "model": "gemini-3.1-flash-lite"},
         ]
     },
     TaskType.MATH: {
@@ -40,13 +40,13 @@ ROUTING_RULES = {
         "reason": "GPT-4o is strong at mathematical reasoning",
         "fallback": [
             {"provider": "anthropic", "model": "claude-sonnet-4-5"},
-            {"provider": "gemini", "model": "gemini-2.5-flash-lite"},
+            {"provider": "gemini", "model": "gemini-3.1-flash-lite"},
         ]
     },
     TaskType.VISION: {
         "provider": "gemini",
-        "model": "gemini-2.5-flash-lite",
-        "reason": "Gemini 2.5 Flash-Lite supports vision natively",
+        "model": "gemini-3.1-flash-lite",
+        "reason": "Gemini 3.1 Flash-Lite supports vision natively",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
             {"provider": "anthropic", "model": "claude-sonnet-4-5"},
@@ -58,7 +58,7 @@ ROUTING_RULES = {
         "reason": "Claude produces high quality creative writing",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
-            {"provider": "gemini", "model": "gemini-2.5-flash-lite"},
+            {"provider": "gemini", "model": "gemini-3.1-flash-lite"},
         ]
     },
     TaskType.ANALYSIS: {
@@ -67,13 +67,13 @@ ROUTING_RULES = {
         "reason": "Claude is excellent at deep analysis",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
-            {"provider": "gemini", "model": "gemini-2.5-flash-lite"},
+            {"provider": "gemini", "model": "gemini-3.1-flash-lite"},
         ]
     },
     TaskType.SUMMARIZATION: {
         "provider": "gemini",
-        "model": "gemini-2.5-flash-lite",
-        "reason": "Gemini 2.5 Flash-Lite is fast for summarization",
+        "model": "gemini-3.1-flash-lite",
+        "reason": "Gemini 3.1 Flash-Lite is fast for summarization",
         "fallback": [
             {"provider": "anthropic", "model": "claude-sonnet-4-5"},
             {"provider": "openai", "model": "gpt-4o-mini"},
@@ -81,8 +81,8 @@ ROUTING_RULES = {
     },
     TaskType.TRANSLATION: {
         "provider": "gemini",
-        "model": "gemini-2.5-flash-lite",
-        "reason": "Gemini 2.5 Flash-Lite handles translation well",
+        "model": "gemini-3.1-flash-lite",
+        "reason": "Gemini 3.1 Flash-Lite handles translation well",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
             {"provider": "anthropic", "model": "claude-sonnet-4-5"},
@@ -90,7 +90,7 @@ ROUTING_RULES = {
     },
     TaskType.SEARCH: {
         "provider": "gemini",
-        "model": "gemini-2.5-flash-lite",
+        "model": "gemini-3.1-flash-lite",
         "reason": "Gemini has good knowledge of recent events",
         "fallback": [
             {"provider": "openai", "model": "gpt-4o"},
@@ -99,8 +99,8 @@ ROUTING_RULES = {
     },
     TaskType.CONVERSATION: {
         "provider": "gemini",
-        "model": "gemini-2.5-flash-lite",
-        "reason": "Gemini 2.5 Flash-Lite is fast for general conversation",
+        "model": "gemini-3.1-flash-lite",
+        "reason": "Gemini 3.1 Flash-Lite is fast for general conversation",
         "fallback": [
             {"provider": "anthropic", "model": "claude-sonnet-4-5"},
             {"provider": "openai", "model": "gpt-4o-mini"},
@@ -174,7 +174,7 @@ def route(classification: ClassificationResult) -> RouterDecision:
     logger.warning("Router using last resort — gemini")
     return RouterDecision(
         provider="gemini",
-        model="gemini-2.5-flash-lite",
+        model="gemini-3.1-flash-lite",
         reason="Last resort fallback — all primary providers unavailable",
         fallbacks=[],
     )

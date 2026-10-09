@@ -22,7 +22,7 @@ export default function ChatPage() {
     catch { return [] }
   })
   const [selectedProvider, setSelectedProvider] = useState('gemini')
-  const [selectedModel, setSelectedModel] = useState('gemini-2.5-flash-lite')
+  const [selectedModel, setSelectedModel] = useState('gemini-3.1-flash-lite')
   const [headerMenuOpen, setHeaderMenuOpen] = useState(false)
 
   // Load workspace

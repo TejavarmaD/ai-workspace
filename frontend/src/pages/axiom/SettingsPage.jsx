@@ -134,7 +134,7 @@ export default function SettingsPage() {
                 </p>
                 <div style={s.infoCard}>
                   <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-                    ✅ Google Gemini — Connected (gemini-2.5-flash-lite)<br/>
+                    ✅ Google Gemini — Connected (gemini-3.1-flash-lite)<br/>
                     ⚠️ Anthropic Claude — API key required<br/>
                     ⚠️ OpenAI — API key required<br/>
                     🔵 Ollama — Local (not running)

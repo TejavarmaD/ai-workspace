@@ -11,7 +11,7 @@ from backend.app.gateway import gateway
 logger = get_logger(__name__)
 
 DEFAULT_PROVIDER = "gemini"
-DEFAULT_MODEL = "gemini-2.5-flash-lite"
+DEFAULT_MODEL = "gemini-3.1-flash-lite"
 
 
 def verify_workspace_access(db: Session, workspace_id: uuid.UUID, user_id: uuid.UUID):
