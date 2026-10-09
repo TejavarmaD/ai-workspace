@@ -13,7 +13,7 @@ export default function Chat() {
   const [loading, setLoading] = useState(false)
   const [sending, setSending] = useState(false)
   const [selectedProvider, setSelectedProvider] = useState('gemini')
-  const [selectedModel, setSelectedModel] = useState('gemini-flash-latest')
+  const [selectedModel, setSelectedModel] = useState('gemini-2.5-flash-lite')
 
   useEffect(() => {
     api.workspaces.list().then(data => {

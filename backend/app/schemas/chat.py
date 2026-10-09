@@ -6,7 +6,7 @@ class CreateConversationRequest(BaseModel):
     title: str = "New Conversation"
     workspace_id: str
     provider: str = "gemini"
-    model: str = "gemini-flash-latest"
+    model: str = "gemini-2.5-flash-lite"
 
 
 class RenameConversationRequest(BaseModel):

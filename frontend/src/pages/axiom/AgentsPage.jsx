@@ -10,7 +10,7 @@ const AVAILABLE_TOOLS = [
 ]
 
 const MODELS = [
-  { id: 'gemini:gemini-flash-latest', label: 'Gemini Flash (Free)' },
+  { id: 'gemini:gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite' },
   { id: 'anthropic:claude-sonnet-4-5', label: 'Claude Sonnet' },
   { id: 'openai:gpt-4o', label: 'GPT-4o' },
 ]
@@ -23,7 +23,7 @@ export default function AgentsPage() {
   const [agents, setAgents] = useState([])
   const [form, setForm] = useState({
     name: '', description: '', instructions: '',
-    expected_output: '', model: 'gemini:gemini-flash-latest',
+    expected_output: '', model: 'gemini:gemini-2.5-flash-lite',
     tools: [], is_public: false,
   })
 
@@ -53,7 +53,7 @@ export default function AgentsPage() {
     setShowBuilder(false)
     setForm({
       name: '', description: '', instructions: '',
-      expected_output: '', model: 'gemini:gemini-flash-latest',
+      expected_output: '', model: 'gemini:gemini-2.5-flash-lite',
       tools: [], is_public: false,
     })
   }

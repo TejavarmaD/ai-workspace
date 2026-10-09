@@ -38,7 +38,7 @@ def create_conversation(
     db: Session = Depends(get_db),
 ):
     provider = getattr(data, 'provider', 'gemini') or 'gemini'
-    model = getattr(data, 'model', 'gemini-flash-latest') or 'gemini-flash-latest'
+    model = getattr(data, 'model', 'gemini-2.5-flash-lite') or 'gemini-2.5-flash-lite'
     conv = chat_service.create_conversation(
         db=db,
         user_id=current_user.id,

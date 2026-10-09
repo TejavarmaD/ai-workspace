@@ -40,8 +40,8 @@ PROVIDER_REGISTRY = {
         "env_key": "GOOGLE_API_KEY",
         "models": [
             {
-                "id": "gemini-flash-latest",
-                "name": "Gemini Flash (Latest)",
+                "id": "gemini-2.5-flash-lite",
+                "name": "Gemini 2.5 Flash-Lite",
                 "context_window": 1048576,
                 "supports_streaming": True,
                 "supports_vision": True,
