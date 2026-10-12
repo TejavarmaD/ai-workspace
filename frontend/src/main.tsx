@@ -11,6 +11,7 @@ import ImagesPage from './pages/axiom/ImagesPage'
 import LibraryPage from './pages/axiom/LibraryPage'
 import ProjectsPage from './pages/axiom/ProjectsPage'
 import AgentsPage from './pages/axiom/AgentsPage'
+import AnalyticsPage from './pages/axiom/AnalyticsPage'
 import AppsPage from './pages/axiom/AppsPage'
 import ScheduledPage from './pages/axiom/ScheduledPage'
 import SettingsPage from './pages/axiom/SettingsPage'
@@ -29,6 +30,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/library" element={<ProtectedRoute><LibraryPage /></ProtectedRoute>} />
             <Route path="/projects" element={<ProtectedRoute><ProjectsPage /></ProtectedRoute>} />
             <Route path="/agents" element={<ProtectedRoute><AgentsPage /></ProtectedRoute>} />
+            <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
             <Route path="/apps" element={<ProtectedRoute><AppsPage /></ProtectedRoute>} />
             <Route path="/scheduled" element={<ProtectedRoute><ScheduledPage /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />

@@ -8,6 +8,7 @@ import {
   Sun, Moon, Settings, LogOut, MoreHorizontal,
   Pin, Archive, Trash2, Edit3, Share2
 } from 'lucide-react'
+import {BarChart2 } from 'lucide-react'
 
 const NAV_ITEMS = [
   { id: 'chat', label: 'New Chat', icon: Plus, path: '/chat', action: 'new-chat' },
@@ -17,6 +18,7 @@ const NAV_ITEMS = [
   { id: 'apps', label: 'Apps', icon: Puzzle, path: '/apps' },
   { id: 'projects', label: 'Projects', icon: FolderOpen, path: '/projects' },
   { id: 'agents', label: 'Agents', icon: Bot, path: '/agents' },
+  { id: 'analytics', label: 'Analytics', icon: BarChart2, path: '/analytics' },
 ]
 
 export default function Sidebar({
