@@ -8,6 +8,7 @@ import EmptyChat from '../../components/chat/EmptyChat'
 import ModelSelector from '../../components/models/ModelSelector'
 import { Share2, MoreHorizontal, Edit3, Pin, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { exportAsMarkdown, exportAsPDF, exportAsText } from '../../lib/export'
 
 export default function ChatPage() {
   const { user } = useAuth()
@@ -319,6 +320,37 @@ export default function ChatPage() {
                     <button style={s.menuItem} onClick={handleShare}>
                       <Share2 size={13} /> Share
                     </button>
+                    <button
+                      style={s.menuItem}
+                      onClick={() => {
+                        exportAsMarkdown(activeConv, messages)
+                        setHeaderMenuOpen(false)
+                      }}
+                    >
+                      📄 Export as Markdown
+                    </button>
+
+                    <button
+                      style={s.menuItem}
+                      onClick={() => {
+                        exportAsPDF(activeConv, messages)
+                        setHeaderMenuOpen(false)
+                      }}
+                    >
+                      📕 Export as PDF
+                    </button>
+
+                    <button
+                      style={s.menuItem}
+                      onClick={() => {
+                        exportAsText(activeConv, messages)
+                        setHeaderMenuOpen(false)
+                      }}
+                    >
+                      📝 Export as Text
+                    </button>
+
+                    <div style={s.menuDivider} />
 
                     <div style={s.menuDivider} />
 
