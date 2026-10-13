@@ -246,5 +246,5 @@ const s = {
   micActive: { color: '#ef4444', background: '#fee2e2' },
   sendBtn: { background: 'var(--bg-hover)', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', borderRadius: '50%', flexShrink: 0, transition: 'all 0.15s' },
   sendActive: { background: 'linear-gradient(135deg,#7c3aed,#3b82f6)', color: '#fff', cursor: 'pointer' },
-  hint: { textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '0.4rem' },
+  hint: { textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.72rem', marginTop: '0.4rem', display: 'none' },
 }

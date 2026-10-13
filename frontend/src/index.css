@@ -623,3 +623,32 @@ body {
     transition: none;
   }
 }
+
+/* ================================
+   MOBILE RESPONSIVE
+   ================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .axiom-message h1 { font-size: 1.2rem; }
+  .axiom-message h2 { font-size: 1.1rem; }
+  .axiom-message pre { font-size: 0.8rem; padding: 0.75rem; }
+  .axiom-message table { font-size: 0.8rem; }
+}
+
+/* Touch devices */
+@media (hover: none) {
+  button:hover { opacity: 1 !important; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
