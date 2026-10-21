@@ -3,9 +3,11 @@ services:
     name: axiom-backend
     runtime: python
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && alembic upgrade head
-    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
     envVars:
+      - key: PYTHONPATH
+        value: /opt/render/project/src
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
