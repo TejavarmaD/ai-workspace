@@ -1,4 +1,4 @@
-# AXIOM — Intelligent AI Workspace
+# AXIOM - Intelligent AI Workspace
 
 > Built from zero. Powered by intelligence. Routes every prompt to the best AI model automatically.
 
@@ -43,7 +43,7 @@ You just ask. AXIOM picks the best brain.
 
 ## 🏗️ Built Phase by Phase
 
-### Phase 1 — Foundation
+### Phase 1 - Foundation
 Set up the entire infrastructure before writing any features.
 - Project folder architecture
 - PostgreSQL + Docker
@@ -53,7 +53,7 @@ Set up the entire infrastructure before writing any features.
 - 14 AI providers + 30 models registered
 - Git initialized and pushed
 
-### Phase 2 — Authentication + Workspace
+### Phase 2 - Authentication + Workspace
 Secured the application so only registered users can access it.
 - User registration + login
 - Argon2 password hashing
@@ -63,7 +63,7 @@ Secured the application so only registered users can access it.
 - Workspace invitations
 - Login + Register UI
 
-### Phase 3 — Chat Interface + Real AI
+### Phase 3 - Chat Interface + Real AI
 Built the actual ChatGPT-style chat connected to real AI.
 - Conversations + Messages stored in PostgreSQL
 - Google Gemini integration (free tier)
@@ -71,7 +71,7 @@ Built the actual ChatGPT-style chat connected to real AI.
 - ChatGPT-style UI with sidebar + composer
 - Real AI responses
 
-### Phase 4 — Multi-Model Provider Gateway
+### Phase 4 - Multi-Model Provider Gateway
 Made the app work with any AI provider, not just one.
 - AI Gateway with normalized request/response
 - Gemini, Anthropic, OpenAI, Ollama adapters
@@ -79,16 +79,16 @@ Made the app work with any AI provider, not just one.
 - Model selector in chat header
 - Fallback handler (if primary fails, tries next)
 
-### Phase 5 — AXIOM UI + Intelligent Routing
+### Phase 5 - AXIOM UI + Intelligent Routing
 Transformed into a professional AI workspace with smart model selection.
 - Complete AXIOM design system (dark/light mode)
 - Collapsible sidebar with all navigation
 - Constellation animation login pages
-- **Prompt Classifier** — detects task type automatically
-- **Intelligent Model Router** — picks best provider per task
+- **Prompt Classifier** - detects task type automatically
+- **Intelligent Model Router** - picks best provider per task
 - 8 section pages (Images, Library, Projects, Agents, Apps, etc.)
 
-### Phase 6 — RAG + Knowledge Base + Agent Builder
+### Phase 6 - RAG + Knowledge Base + Agent Builder
 Let users upload documents and build custom AI agents.
 - ChromaDB vector database
 - PDF, DOCX, TXT processing
@@ -96,7 +96,7 @@ Let users upload documents and build custom AI agents.
 - Knowledge Base API + UI
 - Agent Builder with instructions, model, tools
 
-### Phase 7 — Analytics + Streaming + Export + Mobile
+### Phase 7 - Analytics + Streaming + Export + Mobile
 Polished to production quality.
 - Analytics dashboard with real charts
 - Streaming responses (word by word like ChatGPT)
@@ -129,18 +129,18 @@ Response streamed back to user
 ## 🛠️ Tech Stack
 
 ### Backend
-- **FastAPI** — Python web framework
-- **SQLAlchemy + Alembic** — ORM + migrations
-- **PostgreSQL** — Production database
-- **ChromaDB** — Vector store for RAG
-- **Argon2 + JWT** — Security
+- **FastAPI** - Python web framework
+- **SQLAlchemy + Alembic** - ORM + migrations
+- **PostgreSQL** - Production database
+- **ChromaDB** - Vector store for RAG
+- **Argon2 + JWT** - Security
 
 ### Frontend
-- **React 19 + Vite** — UI framework
-- **React Router v7** — Navigation
-- **Recharts** — Data visualization
-- **React Markdown** — Render AI responses
-- **jsPDF** — Export to PDF
+- **React 19 + Vite** - UI framework
+- **React Router v7** - Navigation
+- **Recharts** - Data visualization
+- **React Markdown** - Render AI responses
+- **jsPDF** - Export to PDF
 
 ---
 
@@ -165,15 +165,15 @@ ai-workspace/
 ---
 
 ## 🗄️ Database Tables
-users → accounts and profiles
-workspaces → user workspaces
-workspace_members → roles per workspace
-refresh_tokens → JWT session management
-conversations → chat sessions
-messages → individual messages
-knowledge_bases → document collections
-knowledge_documents → uploaded files
-agents → custom AI agents
+**users** → accounts and profiles
+**workspaces** → user workspaces
+**workspace_members** → roles per workspace
+**refresh_tokens** → JWT session management
+**conversations** → chat sessions
+**messages** → individual messages
+**knowledge_bases** → document collections
+**knowledge_documents** → uploaded files
+**agents** → custom AI agents
 
 
 ---
@@ -264,14 +264,14 @@ GET /docs Interactive API docs
 **Tejavarma Dommaraju**
 GitHub: [@TejavarmaD](https://github.com/TejavarmaD)
 
-*Started with zero coding knowledge. Built a production-grade AI platform.*
+*Started with zero coding knowledge. Built a production-grade AI platform using AI.*
 
 ---
 
 ## 📄 License
 
-MIT — free to use, modify, distribute.
+MIT - free to use, modify, distribute.
 
 ---
 
-*AXIOM — The right AI for every question.*
+*AXIOM - The right AI for every question.*
